@@ -29,11 +29,8 @@ function App() {
 
   const handleDelete = (e) => {
     todos.splice(e.target.parentNode.id, 1)
+    setTodos([todos])
   }
-
-  useEffect(() => {
-    setTodos(todos)
-  }, [todos])
 
 
 
