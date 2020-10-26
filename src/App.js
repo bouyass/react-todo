@@ -6,7 +6,7 @@ import Item from './Item'
 
 function App() {
   
-  const [todos, setTodos] = useState(["faire le cv"])
+  const [todos, setTodos] = useState([])
   const [todo, setTodo] = useState('')
   const [emptyError, setEmptyError] = useState(false)
 
@@ -15,7 +15,8 @@ function App() {
     if(todo.length == 0){
       setEmptyError(true)
     }else{
-      setTodos([...todos, todo])
+      todos.push(todo)
+      setTodos(todos)
       setTodo('')
     }
   }
@@ -28,14 +29,15 @@ function App() {
   }
 
   const handleDelete = (e) => {
-    todos.splice(e.target.parentNode.id, 1)
-    setTodos([todos])
+    e.stopPropagation()
+    setTodos(todos.filter((item, index) => index.toString() !== e.target.parentNode.id))
   }
 
 
 
   return (
     <div className="App">
+      {todos.length}
        <div className="inputArea"> <input class="form-control" onChange={handleChange} value={todo} type="text" placeholder="Enter todo"></input> <button onClick={handleClick} type="button" class="btn btn-dark">Add todo</button></div>
        {!emptyError ? '' : <div className="error"> Todo can't be empty, please add a todo </div>}
        <div className="todoList">
